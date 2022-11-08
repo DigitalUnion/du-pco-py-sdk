@@ -37,11 +37,10 @@ class Client(object):
             API_ID_KEY: api_id,
             SDK_VER_KEY: sdk_ver,
         }
-        data = common.encode(data, self.secret_key)
-        print(str(base64.encodebytes(data)))
+        data = common.encode(data, self.secret_val)
         resp = post(self.domain, data, headers=headers)
         if resp.status_code == 200:
-            result = common.decode(resp.text, self.secret_key)
+            result = common.decode(resp.content, self.secret_val)
             return result
 
     @staticmethod

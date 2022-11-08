@@ -1,17 +1,17 @@
 from Crypto.Cipher import AES
-import base64
 
 
 def encrypt(data, secret_key):
     secret_key = fill_key(secret_key)
     block = AES.block_size
-    text = pkcs5_padding(data, block).encode()
+    text = pkcs5_padding(data, block)
     cbc = AES.new(secret_key.encode('utf-8'), AES.MODE_CBC, secret_key.encode('utf-8'))
     return cbc.encrypt(text)
 
 
 def pkcs5_padding(s, block):
-    return s + (block - len(s.encode()) % block) * chr(block - len(s.encode()) % block)
+    pad_len = block - len(s) % block
+    return s + (bytes([pad_len]) * pad_len)
 
 
 def un_pad(s):
@@ -20,7 +20,7 @@ def un_pad(s):
 
 def decrypt(data, secret_key):
     secret_key = fill_key(secret_key)
-    cbc = AES.new(secret_key.encode('utf-8'), AES.MODE_CBC, secret_key.encode('utf-8'))
+    cbc = AES.new(secret_key.encode(), AES.MODE_CBC, secret_key.encode())
     return un_pad(cbc.decrypt(data))
 
 
