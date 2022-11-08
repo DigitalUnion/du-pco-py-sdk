@@ -3,9 +3,6 @@
  * @Description: A simple way to call DigitalUnion service
  * @Date: 2022/11/04 14:28 PM
 """
-import base64
-import http
-
 from requests import post
 
 from dupco import common
@@ -19,6 +16,7 @@ CLIENT_ID = "client_id"
 SECRET_KEY = "secret_key"
 SDK_VER_KEY = "sdk_ver"
 FMT_HTTP_CODE_ERROR = "HTTP CODE:%d"
+OTHER_ERROR_CODE = 10999
 
 sdk_ver = "v1.1.2"
 
@@ -37,11 +35,20 @@ class Client(object):
             API_ID_KEY: api_id,
             SDK_VER_KEY: sdk_ver,
         }
-        data = common.encode(data, self.secret_val)
-        resp = post(self.domain, data, headers=headers)
+        try:
+            if len(data) != 0:
+                data = common.encode(data, self.secret_val)
+            resp = post(self.domain, data, headers=headers)
+        except Exception as e:
+            return OTHER_ERROR_CODE, e
+        if resp.status_code >= 400:
+            return OTHER_ERROR_CODE, Exception(FMT_HTTP_CODE_ERROR % resp.status_code)
         if resp.status_code == 200:
-            result = common.decode(resp.content, self.secret_val)
-            return result
+            try:
+                result = common.decode(resp.content, self.secret_val)
+            except Exception as e:
+                return OTHER_ERROR_CODE, e
+
 
     @staticmethod
     def enable_test_mode():
