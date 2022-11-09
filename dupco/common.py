@@ -1,4 +1,3 @@
-import base64
 import zlib
 
 from dupco import aes

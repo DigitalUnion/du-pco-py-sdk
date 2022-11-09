@@ -5,9 +5,13 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="dupco",
-    version="0.0.2",
+    version="0.0.3",
     author="gaojian",
     author_email="gaojian@shuzilm.cn",
+    install_requires=[
+        "pycryptodome==3.15.0",
+        "requests==2.28.1"
+    ],
     description="A simple way to call DigitalUnion service",
     long_description=long_description,
     url="https://github.com/DigitalUnion/du-pco-py-sdk",
