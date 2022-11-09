@@ -1,3 +1,8 @@
+"""
+ * @Author: gaojian
+ * @Description: A simple way to call DigitalUnion service
+ * @Date: 2022/11/04 14:28 PM
+"""
 from Crypto.Cipher import AES
 
 
@@ -42,12 +47,4 @@ def fill_key(key):
         return key
     if l < 16:
         return fill_n(key, 16)
-
     return key[:16]
-
-
-if __name__ == '__main__':
-    ret = encrypt("r10001-r20001-r30001", "D13D7dfdfD11C52")
-    print(type(ret))
-    # ret = "LHrsBWr8YlNFxKbiBYRBGO8Gk+y0dV3ghGUCPg+EfVg="
-    print((decrypt(ret, "D13D7dfdfD11C52")).decode())

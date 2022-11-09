@@ -31,6 +31,11 @@ class Client(object):
         self.__domain = domain
 
     def call(self, api_id, data):
+        """
+        :param api_id: string
+        :param data: string
+        :return: dict
+        """
         headers = {
             CLIENT_ID: self.__client_id,
             SECRET_KEY: self.__secret_key,
@@ -67,15 +72,22 @@ class Client(object):
 
 
 def new_base_client(client_id, secret_key, secret_val):
+    """
+       create and return a new dupco
+       :param client_id: string
+       :param secret_key: string
+       :param secret_val: string
+       :return: class `Client` object
+       """
     return Client(client_id, secret_key, secret_val, BASE_DOMAIN)
 
 
 def new_data_client(client_id, secret_key, secret_val):
+    """
+    create and return a new dupco
+    :param client_id: string
+    :param secret_key: string
+    :param secret_val: string
+    :return: class `Client` object
+    """
     return Client(client_id, secret_key, secret_val, DATA_DOMAIN)
-
-
-if __name__ == '__main__':
-    c = new_data_client("cloud-test", "aa", "yDpDEihpUsF_RyWsCES1H")
-    c.enable_test_mode()
-    ret = c.call("idmap-query-all", '{"f":"mac,imei","k":"868862032205613","m":"0"}')
-    print(ret)

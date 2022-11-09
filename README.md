@@ -3,9 +3,9 @@
 
 ## Installation
 
-> python versions: 3.6 and greater
+- python versions: 3.6 and greater
 
-> pip install dupco
+- pip install dupco
 
 
 ## Quickstart
@@ -31,5 +31,7 @@ if __name__ == '__main__':
 	import dupco
 
 if __name__ == '__main__':
-    dupco.decode(raw, secretVal)
+    raw = "<your raw>"
+    secret_val = "<your secret value>"
+    dupco.decode(raw, secret_val)
 ```
